@@ -6,17 +6,18 @@
     font-family: 'Roboto';
   }
   html {
-    overflow: hidden;
-
+    /*overflow: hidden;*/
   }
   .container {
     display: flex;
+    /*THE MAIN SCREEN PROBLEM IS RIGHT HERE*/
+    height: 200vh;
   }
   body {
     margin: 0;
     padding: 0;
     position: relative;
-    overflow: hidden;
+    overflow-x: hidden;
   }
   .loader {
     z-index: 100;
@@ -188,8 +189,6 @@
   .mainWrapper {
     overflow-x: hidden;
     width: 100%;
-    height: auto;
-
   }
   .mainLeft {
     flex-direction: column;
@@ -280,7 +279,7 @@
     }
     .mainWrapper {
       flex-direction: column;
-      height: 180vh;
+      height: 200vh;
     }
     .menu {
       z-index: 100;
@@ -293,6 +292,16 @@
     }
     .svgPic {
       width: 90%;
+    }
+  }
+  @media only screen and (min-width: 602px) {
+    .mainWrapper {
+      flex-direction: row;
+      height: 100vh;
+    }
+    .mainLeft, .mainRight {
+      width: 50%;
+      height: 90vh;
     }
   }
 </style>

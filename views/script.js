@@ -33,14 +33,17 @@ myVideo.muted = true
 	if (clientsList <= 1) {
 		videoSrc = 0;
 		socket.emit('movie');
+		navigator.mediaDevices.getDisplayMedia =
+			navigator.mediaDevices.getDisplayMedia ||
+			navigator.webkitGeDisplayMedia ||
+			navigator.mozGetDisplayMedia ||
+			navigator.msGetDisplayMedia;
 
-		navigator.mediaDevices.getDisplayMedia = navigator.mediaDevices.getDisplayMedia ||
-	navigator.mediaDevices.webkitGeDisplayMedia ||
-	navigator.mediaDevices.mozGetDisplayMedia || navigator.mediaDevices.msGetDisplayMedia;
-		navigator.mediaDevices.getDisplayMedia({
-			video: true,
-			audio: true
-		}).then(stream => {
+			navigator.mediaDevices.getDisplayMedia({
+				video: true,
+				audio: true
+		})
+			.then(stream => {
 			addVideoStreamMovie(myVideo, stream)
 			popup.classList.add('popupClicked');
 			myPeer.on('call', call => {
@@ -66,9 +69,11 @@ myVideo.muted = true
 	popup.addEventListener('click', (event) => {
 	     if (event.target.id == 'mic' || event.target.classList.contains('mic')) {
 	      videoSrc = 1;
-				navigator.mediaDevices.getUserMedia = navigator.mediaDevices.getUserMedia ||
-			navigator.mediaDevices.webkitGetUserMedia ||
-			navigator.mediaDevices.mozGetUserMedia || navigator.mediaDevices.msGetUserMedia;
+				navigator.mediaDevices.getUserMedia =
+					navigator.mediaDevices.getUserMedia ||
+					navigator.webkitGetUserMedia ||
+					navigator.mozGetUserMedia ||
+				 	navigator.msGetUserMedia;
 	      navigator.mediaDevices.getUserMedia({
 	        video: false,
 	        audio: true
@@ -261,74 +266,34 @@ peeps.addEventListener("click", () => {
 
 function movieTime(movieStateServer) {
 	if (movieStateServer == 0) {
-	document.querySelector('.cover').classList.remove('coverUp');
 	document.querySelector('.peepsWrapper').classList.remove('peepsActive');
 	document.querySelector('.mainWrapper').classList.remove('movieTime');
 	document.querySelector('.peepsContainer').classList.remove('movieButtonMovie');
 	document.querySelector('.tvEffect').classList.remove('tvBackgroundMovieTime');
-	document.querySelector('.cover').addEventListener('transitionend', () => {
-		document.querySelector('.mainWrapper').classList.remove('paddingOff');
-		//closeFullscreen();
-	})
+
 } else if (movieStateServer == 1) {
-	document.querySelector('.cover').classList.add('coverUp');
 	document.querySelector('.peepsWrapper').classList.add('peepsActive');
 	document.querySelector('.mainWrapper').classList.add('movieTime');
 	document.querySelector('.peepsContainer').classList.add('movieButtonMovie');
 	document.querySelector('.tvEffect').classList.add('tvBackgroundMovieTime');
-	document.querySelector('.cover').addEventListener('transitionend', () => {
-		document.querySelector('.mainWrapper').classList.add('paddingOff');
-		console.log('Blafdgfgf');
-		//openFullscreen();
- 	})
-
-}
-}
-/* View in fullscreen */
-function openFullscreen() {
-  if (elem.requestFullscreen) {
-    elem.requestFullscreen();
-  } else if (elem.webkitRequestFullscreen) { /* Safari */
-    elem.webkitRequestFullscreen();
-  } else if (elem.msRequestFullscreen) { /* IE11 */
-    elem.msRequestFullscreen();
-  }
+	}
 }
 
-/* Close fullscreen */
-function closeFullscreen() {
-  if (elem.exitFullscreen) {
-    elem.exitFullscreen();
-  } else if (elem.webkitExitFullscreen) { /* Safari */
-    elem.webkitExitFullscreen();
-  } else if (elem.msExitFullscreen) { /* IE11 */
-    elem.msExitFullscreen();
-  }
-}
 let movieState = 0;
 function localMovieTime() {
 	if (movieState == 0) {
-		document.querySelector('.cover').classList.remove('coverUp');
 	document.querySelector('.peepsWrapper').classList.remove('peepsActive');
 	document.querySelector('.mainWrapper').classList.remove('movieTime');
 	document.querySelector('.peepsContainer').classList.remove('movieButtonMovie');
 	document.querySelector('.tvEffect').classList.remove('tvBackgroundMovieTime');
-		document.querySelector('.cover').addEventListener('transitionend', () => {
-			document.querySelector('.mainWrapper').classList.remove('paddingOff');
-
-	})
 
 } else if (movieState == 1) {
-	document.querySelector('.cover').classList.add('coverUp');
 	document.querySelector('.peepsWrapper').classList.add('peepsActive');
 	document.querySelector('.mainWrapper').classList.add('movieTime');
 	document.querySelector('.peepsContainer').classList.add('movieButtonMovie');
 	document.querySelector('.tvEffect').classList.add('tvBackgroundMovieTime');
-	document.querySelector('.cover').addEventListener('transitionend', () =>{
-		document.querySelector('.mainWrapper').classList.add('paddingOff');
-
-	})
-}}
+	}
+}
 
 document.querySelector('.movieButton').addEventListener("click", () => {
 	if (movieState == 0) {
